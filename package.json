@@ -1,19 +1,23 @@
 {
-  "name": "react-native-mymonero-core",
+  "name": "@beldex/react-native-beldex-core",
   "version": "0.1.0",
-  "description": "React Native bindings for mymonero-core-cpp",
-  "homepage": "https://github.com/EdgeApp/react-native-mymonero-core",
+  "description": "Native bindings for Beldex",
+  "homepage": "https://github.com/me-chrislang",
   "repository": {
     "type": "git",
-    "url": "git@github.com:EdgeApp/react-native-mymonero-core.git"
+    "url": "git@github.com/Beldex-Coin/react-native-beldex-core.git"
   },
-  "license": "BSD-3-Clause",
-  "author": "Airbitz, Inc.",
-  "contributors": [
-    "William Swanson <william@edge.app>",
-    "Paul Puey <paul@edge.app>"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "author": "Chris Lang",
   "main": "src/index.js",
+  "keywords": [
+    "beldex",
+    "SDK",
+    "bdx"
+  ],
   "files": [
     "android/build.gradle",
     "android/src",
@@ -25,7 +29,9 @@
     "package.json",
     "react-native-mymonero-core.podspec",
     "README.md",
-    "src"
+    "src",
+    "scripts/",
+    "boost/"
   ],
   "scripts": {
     "format-java": "./android/format-java.sh",

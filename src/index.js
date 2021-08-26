@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native'
 
-const native = NativeModules.MyMoneroCore
+const native = NativeModules.BeldexCore
 
-export function callMyMonero(method, jsonArguments) {
-  return native.callMyMonero(method, jsonArguments)
+export function callBeldex(method, jsonArguments) {
+  return native.callBeldex(method, jsonArguments)
 }
