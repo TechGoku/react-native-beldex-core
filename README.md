@@ -1,15 +1,15 @@
-# react-native-mymonero-core
+# react-native-beldex-core
 
-This library packages the [mymonero-core-cpp](https://github.com/mymonero/mymonero-core-cpp) library for use on React Native.
+This library packages the [beldex-core-cpp](https://github.com/Beldex-coin/beldex-core-cpp) library for use on React Native.
 
-It exposes a single method, `callMyMonero`, which accepts and returns JSON strings for now:
+It exposes a single method, `callBeldex`, which accepts and returns JSON strings for now:
 
 ```js
-import { callMyMonero } from 'react-native-mymonero-core'
+import { callBeldex } from 'react-native-beldex-core'
 
-const jsonResult = await callMyMonero('is_subaddress', JSON.stringify(args))
+const jsonResult = await callBeldex('is_subaddress', JSON.stringify(args))
 const result = JSON.parse(jsonResult)
-```
+```beldex
 
 In a future version, we would like to provide a nicer Javascript API to this library.
 
@@ -30,4 +30,4 @@ This script does the following tasks:
   - Assemble `CMakeLists.txt`.
 - Compile an iOS universal static library.
 
-The `update-sources` script is also the place to make edits when upgrading any of the third-party dependencies. The react-native-mymonero-core repo doesn't include these third-party C++ sources, since they are enormous.
+The `update-sources` script is also the place to make edits when upgrading any of the third-party dependencies. The react-native-beldex-core repo doesn't include these third-party C++ sources, since they are enormous.
