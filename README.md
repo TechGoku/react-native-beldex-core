@@ -9,7 +9,7 @@ import { callBeldex } from 'react-native-beldex-core'
 
 const jsonResult = await callBeldex('is_subaddress', JSON.stringify(args))
 const result = JSON.parse(jsonResult)
-```beldex
+```
 
 In a future version, we would like to provide a nicer Javascript API to this library.
 
