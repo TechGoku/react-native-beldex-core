@@ -248,14 +248,14 @@ async function generateIosLibrary(): Promise<void> {
     if (!existsSync(working)) mkdirSync(working)
 
     // Find platform tools:
-    // const xcrun = ['xcrun', '--sdk', iosPlatforms[arch]]
-    // const ar = quietExec([...xcrun, '--find', 'ar'])
-    // const cc = quietExec([...xcrun, '--find', 'clang'])
-    // const cxx = quietExec([...xcrun, '--find', 'clang++'])
-    // const sdkFlags = [
-    //   `-arch ${arch}`,
-    //   `-isysroot ${quietExec([...xcrun, '--show-sdk-path'])}`
-    // ]
+    const xcrun = ['xcrun', '--sdk', iosPlatforms[arch]]
+    const ar = quietExec([...xcrun, '--find', 'ar'])
+    const cc = quietExec([...xcrun, '--find', 'clang'])
+    const cxx = quietExec([...xcrun, '--find', 'clang++'])
+    const sdkFlags = [
+      `-arch ${arch}`,
+      `-isysroot ${quietExec([...xcrun, '--show-sdk-path'])}`
+    ]
 
     // Compile sources:
     const objects: string[] = []
@@ -270,31 +270,31 @@ async function generateIosLibrary(): Promise<void> {
       objects.push(object)
 
       const useCxx = /\.cpp$|\.cc$/.test(source)
-      // quietExec([
-      //   useCxx ? cxx : cc,
-      //   '-c',
-      //   ...(useCxx ? cxxflags : cflags),
-      //   ...sdkFlags,
-      //   `-o ${object}`,
-      //   join(tmp, source)
-      // ])
+      quietExec([
+        useCxx ? cxx : cc,
+        '-c',
+        ...(useCxx ? cxxflags : cflags),
+        ...sdkFlags,
+        `-o ${object}`,
+        join(tmp, source)
+      ])
     }
 
     // Generate a static library:
-    const library = join(working, `libmymonero-core.a`)
+    const library = join(working, `libbeldex-core.a`)
     if (existsSync(library)) unlinkSync(library)
     libraries.push(library)
-    // quietExec([ar, 'rcs', library, ...objects])
+    quietExec([ar, 'rcs', library, ...objects])
   }
 
   // Merge the platforms into a fat library:
-  // quietExec([
-  //   'lipo',
-  //   '-create',
-  //   '-output',
-  //   join(__dirname, '../ios/Libraries/libmymonero-core.a'),
-  //   ...libraries
-  // ])
+  quietExec([
+    'lipo',
+    '-create',
+    '-output',
+    join(__dirname, '../ios/Libraries/libbeldex-core.a'),
+    ...libraries
+  ])
 }
 
 /**
