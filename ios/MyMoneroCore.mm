@@ -1,7 +1,7 @@
 #import "MyMoneroCore.h"
 #include "mymonero-methods.hpp"
 
-@implementation MyMoneroCore
+@implementation BeldexCore
 
 RCT_EXPORT_MODULE();
 
