@@ -6,7 +6,7 @@
 RCT_EXPORT_MODULE();
 
 RCT_REMAP_METHOD(
-  callMyMonero,
+  callBeldex,
   callMyMoneroMethod:(NSString *)method
   arguments:(NSString *)arguments
   resolver:(RCTPromiseResolveBlock)resolve
