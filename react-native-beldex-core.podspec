@@ -17,8 +17,8 @@ Pod::Spec.new do |s|
     :tag => "v#{s.version}"
   }
   s.source_files =
-    "ios/MyMoneroCore.h",
-    "ios/MyMoneroCore.mm",
+    "ios/BeldexCore.h",
+    "ios/BeldexCore.mm",
     "src/mymonero-wrapper/mymonero-methods.hpp"
   s.vendored_libraries = "ios/Libraries/libbeldex-core.a"
 
