@@ -48,7 +48,7 @@
 
 ## v0.1.2 (2022-03-03)
 
-- added: Export a `monero_utils` object of type `MyMoneroCoreBridge`, which provides a higher-level API to these methods.
+- added: Export a `monero_utils` object of type `BeldexCoreBridge`, which provides a higher-level API to these methods.
 
 ## v0.1.1 (2022-02-08)
 

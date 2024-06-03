@@ -2,12 +2,12 @@
  * The shape of the native C++ module exposed to React Native.
  *
  * You do not normally need this, but it is accessible as
- * `require('react-native').NativeModules.MyMoneroCore`.
+ * `require('react-native').NativeModules.BeldexCore`.
  *
  * Pass this object to the `CppBridge` constructor to re-assemble the API.
  */
-export interface NativeMyMoneroCore {
-  readonly callMyMonero: (
+export interface NativeBeldexCore {
+  readonly callMyBeldex: (
     name: string,
     jsonArguments: string[]
   ) => Promise<string>;
@@ -54,7 +54,7 @@ export type UnpsentOuts = {
 };
 
 export type Nettype = 'MAINNET' | 'STAGENET' | 'TESTNET' | 'FAKECHAIN';
-export type Priority = 1 | 2 | 3 | 4;
+export type Priority = 1 | 5;
 export type RandomOutsCallback = (numberOfOuts: number) => Promise<RandomOuts>;
 
 export type AddressAndKeys = {

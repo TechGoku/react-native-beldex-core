@@ -1,15 +1,15 @@
-#import "MyMoneroCore.h"
-#include "mymonero-methods.hpp"
+#import "BeldexCore.h"
+#include "beldex-methods.hpp"
 
-@implementation MyMoneroCore
+@implementation BeldexCore
 
 RCT_EXPORT_MODULE();
 
 + (BOOL)requiresMainQueueSetup { return NO; }
 
 RCT_REMAP_METHOD(
-  callMyMonero,
-  callMyMoneroMethod:(NSString *)method
+  callBeldex,
+  callBeldexMethod:(NSString *)method
   arguments:(NSArray *)arguments
   resolver:(RCTPromiseResolveBlock)resolve
   rejecter:(RCTPromiseRejectBlock)reject
@@ -26,18 +26,18 @@ RCT_REMAP_METHOD(
   }
 
   // Find the named method:
-  for (int i = 0; i < myMoneroMethodCount; ++i) {
-    if (myMoneroMethods[i].name != methodString) continue;
+  for (int i = 0; i < BeldexMethodCount; ++i) {
+    if (BeldexMethods[i].name != methodString) continue;
 
     // Validate the argument count:
-    if (myMoneroMethods[i].argc != strings.size()) {
-      reject(@"Error", @"mymonero incorrect C++ argument count", nil);
+    if (BeldexMethods[i].argc != strings.size()) {
+      reject(@"Error", @"beldex incorrect C++ argument count", nil);
       return;
     }
 
     // Call the method, with error handling:
     try {
-      const std::string out = myMoneroMethods[i].method(strings);
+      const std::string out = BeldexMethods[i].method(strings);
       resolve(
         [NSString stringWithCString:out.c_str() encoding:NSUTF8StringEncoding]
       );
@@ -48,23 +48,23 @@ RCT_REMAP_METHOD(
         nil
       );
     } catch (...) {
-      reject(@"Error", @"mymonero threw a C++ exception", nil);
+      reject(@"Error", @"beldex threw a C++ exception", nil);
     }
     return;
   }
 
   reject(
     @"TypeError",
-    [NSString stringWithFormat:@"No mymonero C++ method %@", method],
+    [NSString stringWithFormat:@"No beldex C++ method %@", method],
     nil
   );
 }
 
 - (NSDictionary *)constantsToExport
 {
-  NSMutableArray *out = [NSMutableArray arrayWithCapacity:myMoneroMethodCount];
-  for (int i = 0; i < myMoneroMethodCount; ++i) {
-    NSString *name = [NSString stringWithCString:myMoneroMethods[i].name
+  NSMutableArray *out = [NSMutableArray arrayWithCapacity:BeldexMethodCount];
+  for (int i = 0; i < BeldexMethodCount; ++i) {
+    NSString *name = [NSString stringWithCString:BeldexMethods[i].name
       encoding:NSUTF8StringEncoding];
     out[i] = name;
   }

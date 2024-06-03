@@ -1,4 +1,4 @@
-package app.edge.reactnative.mymonerocore;
+package app.edge.reactnative.beldexcore;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.Promise;
@@ -8,16 +8,16 @@ import com.facebook.react.bridge.ReactMethod;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyMoneroModule extends ReactContextBaseJavaModule {
-  private native String callMyMoneroJNI(String method, String[] arguments);
+public class BeldexModule extends ReactContextBaseJavaModule {
+  private native String callBeldexJNI(String method, String[] arguments);
 
   private native String[] getMethodNames();
 
   static {
-    System.loadLibrary("mymonero-jni");
+    System.loadLibrary("beldex-jni");
   }
 
-  public MyMoneroModule(ReactApplicationContext reactContext) {
+  public BeldexModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
 
@@ -30,11 +30,11 @@ public class MyMoneroModule extends ReactContextBaseJavaModule {
 
   @Override
   public String getName() {
-    return "MyMoneroCore";
+    return "BeldexCore";
   }
 
   @ReactMethod
-  public void callMyMonero(String method, ReadableArray arguments, Promise promise) {
+  public void callBeldex(String method, ReadableArray arguments, Promise promise) {
     // Re-package the arguments:
     String[] strings = new String[arguments.size()];
     for (int i = 0; i < arguments.size(); ++i) {
@@ -42,9 +42,9 @@ public class MyMoneroModule extends ReactContextBaseJavaModule {
     }
 
     try {
-      promise.resolve(callMyMoneroJNI(method, strings));
+      promise.resolve(callBeldexJNI(method, strings));
     } catch (Exception e) {
-      promise.reject("MyMoneroError", e);
+      promise.reject("BeldexError", e);
     }
   }
 }

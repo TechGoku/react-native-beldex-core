@@ -1,4 +1,4 @@
-#include "mymonero-wrapper/mymonero-methods.hpp"
+#include "beldex-wrapper/beldex-methods.hpp"
 
 #include <jni.h>
 #include <cstring>
@@ -13,7 +13,7 @@ static const std::string unpackJstring(JNIEnv *env, jstring s) {
 extern "C" {
 
 JNIEXPORT jstring JNICALL
-Java_app_edge_reactnative_mymonerocore_MyMoneroModule_callMyMoneroJNI(
+Java_app_edge_reactnative_beldexcore_BeldexModule_callMyBeldexJNI(
   JNIEnv *env,
   jobject self,
   jstring method,
@@ -31,21 +31,21 @@ Java_app_edge_reactnative_mymonerocore_MyMoneroModule_callMyMoneroJNI(
   }
 
   // Find the named method:
-  for (int i = 0; i < myMoneroMethodCount; ++i) {
-    if (myMoneroMethods[i].name != methodString) continue;
+  for (int i = 0; i < BeldexMethodCount; ++i) {
+    if (BeldexMethods[i].name != methodString) continue;
 
     // Validate the argument count:
-    if (strings.size() != myMoneroMethods[i].argc) {
+    if (strings.size() != BeldexMethods[i].argc) {
       env->ThrowNew(
         env->FindClass("java/lang/Exception"),
-        "mymonero incorrect C++ argument count"
+        "beldex incorrect C++ argument count"
       );
       return nullptr;
     }
 
     // Call the method, with error handling:
     try {
-      const std::string out = myMoneroMethods[i].method(strings);
+      const std::string out = BeldexMethods[i].method(strings);
       return env->NewStringUTF(out.c_str());
     } catch (std::exception e) {
       env->ThrowNew(env->FindClass("java/lang/Exception"), e.what());
@@ -53,7 +53,7 @@ Java_app_edge_reactnative_mymonerocore_MyMoneroModule_callMyMoneroJNI(
     } catch (...) {
       env->ThrowNew(
         env->FindClass("java/lang/Exception"),
-        "mymonero threw a C++ exception"
+        "beldex threw a C++ exception"
       );
       return nullptr;
     }
@@ -61,25 +61,25 @@ Java_app_edge_reactnative_mymonerocore_MyMoneroModule_callMyMoneroJNI(
 
   env->ThrowNew(
     env->FindClass("java/lang/NoSuchMethodException"),
-    ("No mymonero C++ method " + methodString).c_str()
+    ("No beldex C++ method " + methodString).c_str()
   );
   return nullptr;
 }
 
 JNIEXPORT jobjectArray JNICALL
-Java_app_edge_reactnative_mymonerocore_MyMoneroModule_getMethodNames(
+Java_app_edge_reactnative_beldexcore_BeldexModule_getMethodNames(
   JNIEnv *env,
   jobject self
 ) {
   jobjectArray out = env->NewObjectArray(
-    myMoneroMethodCount,
+    BeldexMethodCount,
     env->FindClass("java/lang/String"),
     env->NewStringUTF("")
   );
   if (!out) return nullptr;
 
-  for (int i = 0; i < myMoneroMethodCount; ++i) {
-    jstring name = env->NewStringUTF(myMoneroMethods[i].name);
+  for (int i = 0; i < BeldexMethodCount; ++i) {
+    jstring name = env->NewStringUTF(BeldexMethods[i].name);
     env->SetObjectArrayElement(out, i, name);
   }
   return out;

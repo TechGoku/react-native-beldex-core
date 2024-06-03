@@ -13,14 +13,14 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
   s.requires_arc = true
   s.source = {
-    :git => "https://github.com/EdgeApp/react-native-mymonero-core.git",
+    :git => "https://github.com/TechGoku/react-native-beldex-core.git",
     :tag => "v#{s.version}"
   }
   s.source_files =
-    "ios/MyMoneroCore.h",
-    "ios/MyMoneroCore.mm",
-    "src/mymonero-wrapper/mymonero-methods.hpp"
-  s.vendored_frameworks = "ios/MyMoneroCore.xcframework"
+    "ios/BeldexCore.h",
+    "ios/BeldexCore.mm",
+    "src/beldex-wrapper/beldex-methods.hpp"
+  s.vendored_frameworks = "ios/BeldexCore.xcframework"
 
   s.dependency "React-Core"
 end

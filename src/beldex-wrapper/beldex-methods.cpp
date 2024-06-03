@@ -1,6 +1,6 @@
-#include "mymonero-methods.hpp"
-#include "../mymonero-core-cpp/src/serial_bridge_index.hpp"
-#include "../mymonero-utils/packages/mymonero-monero-client/src/emscr_SendFunds_bridge.hpp"
+#include "beldex-methods.hpp"
+#include "../beldex-core-cpp/src/serial_bridge_index.hpp"
+#include "../beldex-utils/packages/beldex-beldex-client/src/emscr_SendFunds_bridge.hpp"
 
 std::string addressAndKeysFromSeed(const std::vector<const std::string> &args) {
   return serial_bridge::address_and_keys_from_seed(args[0], args[1]);
@@ -74,7 +74,7 @@ std::string seedAndKeysFromMnemonic(const std::vector<const std::string> &args) 
   return serial_bridge::seed_and_keys_from_mnemonic(args[0], args[1]);
 }
 
-const MyMoneroMethod myMoneroMethods[] = {
+const BeldexMethod BeldexMethods[] = {
   { "addressAndKeysFromSeed", 2, addressAndKeysFromSeed },
   { "compareMnemonics", 2, compareMnemonics },
   { "createAndSignTx", 1, createAndSignTx },
@@ -92,4 +92,4 @@ const MyMoneroMethod myMoneroMethods[] = {
   { "seedAndKeysFromMnemonic", 2, seedAndKeysFromMnemonic }
 };
 
-const unsigned myMoneroMethodCount = std::end(myMoneroMethods) - std::begin(myMoneroMethods);
+const unsigned BeldexMethodCount = std::end(BeldexMethods) - std::begin(BeldexMethods);

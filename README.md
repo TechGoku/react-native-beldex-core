@@ -1,4 +1,4 @@
-# react-native-mymonero-core
+# react-native-beldex-core
 
 This library packages Monero C++ crypto methods for use on React Native.
 
@@ -11,7 +11,7 @@ First, add this library to your React Native app using NPM or Yarn, and run `pod
 Here is a simple usage example. Note the `await` on the method call, but not on the require:
 
 ```js
-const bridge = require('react-native-mymonero-core')
+const bridge = require('react-native-beldex-core')
 
 const addressInfo = await bridge.decodeAddress('...', 'MAINNET')
 ```
@@ -19,13 +19,13 @@ const addressInfo = await bridge.decodeAddress('...', 'MAINNET')
 You can also use ES6 imports if you prefer:
 
 ```js
-import bridge from 'react-native-mymonero-core'
+import bridge from 'react-native-beldex-core'
 ```
 
 We have types too, if you need those:
 
 ```ts
-import type { CppBridge } from 'react-native-mymonero-core'
+import type { CppBridge } from 'react-native-beldex-core'
 ```
 
 The available methods are:
@@ -45,7 +45,7 @@ The available methods are:
 - newIntegratedAddress
 - seedAndKeysFromMnemonic
 
-See the documentation at [@mymonero/mymonero-monero-client](https://github.com/mymonero/mymonero-utils/tree/master/packages/mymonero-monero-client) for more information.
+See the documentation at [@bdxi/beldex-client](https://github.com/mymonero/mymonero-utils/tree/master/packages/mymonero-monero-client) for more information.
 
 ## Developing
 

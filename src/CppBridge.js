@@ -1,4 +1,4 @@
-// This has been taken from @mymonero/mymonero-monero-client v2.0.0
+// This has been taken from @bdxi/beldex-client v1.0.0
 // Changes include:
 // - Rename the class from `WABridge` to `CppBridge`
 // - Make all methods `async`
@@ -12,12 +12,12 @@
 let lastSpend = Promise.resolve()
 
 class CppBridge {
-  constructor (MyMoneroCore) {
+  constructor (BeldexCore) {
     // Put the methods back together:
     this.Module = {}
-    for (const name of MyMoneroCore.methodNames) {
+    for (const name of BeldexCore.methodNames) {
       this.Module[name] = function (...args) {
-        return MyMoneroCore.callMyMonero(name, args).then(out => {
+        return BeldexCore.callBeldex(name, args).then(out => {
           // We have to cast some return values:
           return name === 'compareMnemonics' ||
             name === 'isIntegratedAddress' ||
@@ -251,16 +251,7 @@ class CppBridge {
   }
 
   /**
-   * Decodes address to provide spend and view keys.
-   * @param {string} address - The primary address to decode.
-   * @param {string} nettype - The network name eg MAINNET.
-   * @returns {array} Break down of the address.
-   */
-  async decodeAddress (address, nettype) {
-    checkNetType(nettype)
-    const retString = await this.Module.decodeAddress(address, nettype)
-    const ret = JSON.parse(retString)
-    if (ret.err_msg) {
+   * Decodes address to provide spend and view keys.monero
       throw Error(ret.err_msg)
     }
 
