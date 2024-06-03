@@ -396,12 +396,10 @@ function checkNetType (netType) {
 function checkPriority (priority) {
   switch (priority) {
     case 1:
-    case 2:
-    case 3:
-    case 4:
+    case 5:
       break
     default:
-      throw Error('Invalid priority. must be between 1 to 4')
+      throw Error('Invalid priority. must be between 1 or 5')
   }
 }
 
