@@ -30,9 +30,9 @@
     "update-sources": "ZERO_AR_DATE=1 node -r sucrase/register ./scripts/update-sources.ts"
   },
   "dependencies": {
-    "@@bdxi/beldex-bigint": "^1.0.0",
+    "@bdxi/beldex-bigint": "^1.0.0",
     "@bdxi/beldex-money-format": "^1.2.0",
-    "@bdxi/beldex-nettype": "^1.0.1"
+    "@bdxi/beldex-nettype": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.7",
