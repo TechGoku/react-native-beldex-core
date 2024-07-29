@@ -32,7 +32,7 @@ async function downloadSources(): Promise<void> {
   getZip(
     // The Emscripten SDK includes 1.75, but this older version still works:
     'boost_1_63_0.zip',
-    'https://dl.bintray.com/boostorg/release/1.63.0/source/boost_1_63_0.zip'
+    'https://boostorg.jfrog.io/artifactory/main/release/1.63.0/source/boost_1_63_0.zip'
   )
   getRepo(
     'beldex-core-custom',
@@ -46,9 +46,9 @@ async function downloadSources(): Promise<void> {
     'f35b6cc267891b253770b17e267a83667bcaa1a8'
   )
   getRepo(
-    'beldex-utils',
-    'https://github.com/Beldex-Coin/beldex-utils.git',
-    'd12a0f9559c5b4fe0d26cd3434b68b3527daf4eb'
+    'beldex-client',
+    'https://github.com/TechGoku/beldex-client.git',
+    'c755d581e86bfd08ea6e10ffc2d731024c94ecb2'
   )
   await disklet.setText(
     // Upstream beldex-utils wrongly includes this file, so make a dummy:
@@ -81,6 +81,7 @@ const includePaths: string[] = [
   'beldex-core-custom/mnemonics/',
   'beldex-core-custom/vtlogger/',
   'beldex-core-custom/wallet/',
+  'beldex-core-custom/external/loki-mq',
   'beldex-core-cpp/src/'
 ]
 
@@ -92,6 +93,8 @@ const sources: string[] = [
   'beldex-core-custom/common/base58.cpp',
   'beldex-core-custom/common/threadpool.cpp',
   'beldex-core-custom/common/util.cpp',
+  'beldex-core-custom/common/i18n.cpp',
+  'beldex-core-custom/common/string_util.cpp',
   'beldex-core-custom/contrib/libsodium/src/crypto_verify/verify.c',
   'beldex-core-custom/crypto/aesb.c',
   'beldex-core-custom/crypto/blake256.c',
@@ -114,7 +117,6 @@ const sources: string[] = [
   'beldex-core-custom/crypto/tree-hash.c',
   'beldex-core-custom/cryptonote_basic/account.cpp',
   'beldex-core-custom/cryptonote_basic/cryptonote_basic_impl.cpp',
-  'beldex-core-custom/cryptonote_basic/cryptonote_format_utils_basic.cpp',
   'beldex-core-custom/cryptonote_basic/cryptonote_format_utils.cpp',
   'beldex-core-custom/cryptonote_core/cryptonote_tx_utils.cpp',
   'beldex-core-custom/device/device_default.cpp',
@@ -125,7 +127,6 @@ const sources: string[] = [
   'beldex-core-custom/epee/src/string_tools.cpp',
   'beldex-core-custom/epee/src/wipeable_string.cpp',
   'beldex-core-custom/mnemonics/electrum-words.cpp',
-  'beldex-core-custom/ringct/bulletproofs_plus.cc',
   'beldex-core-custom/ringct/bulletproofs.cc',
   'beldex-core-custom/ringct/multiexp.cc',
   'beldex-core-custom/ringct/rctCryptoOps.c',
@@ -144,8 +145,8 @@ const sources: string[] = [
   'beldex-core-cpp/src/serial_bridge_index.cpp',
   'beldex-core-cpp/src/serial_bridge_utils.cpp',
   'beldex-core-cpp/src/tools__ret_vals.cpp',
-  'beldex-utils/packages/beldex-client/src/emscr_SendFunds_bridge.cpp',
-  'beldex-utils/packages/beldex-client/src/SendFundsFormSubmissionController.cpp',
+  'beldex-client/src/emscr_SendFunds_bridge.cpp',
+  'SendFundsFormSubmissionController.cpp',
   'beldex-wrapper/beldex-methods.cpp'
 ]
 
@@ -171,7 +172,7 @@ async function generateAndroidBuild() {
   await disklet.delete(src + 'boost_1_63_0')
   await disklet.delete(src + 'beldex-core-custom')
   await disklet.delete(src + 'beldex-core-cpp')
-  await disklet.delete(src + 'beldex-utils')
+  await disklet.delete(src + 'beldex-client')
   await disklet.delete(src + 'beldex-wrapper')
 
   // Figure out which files we need:
