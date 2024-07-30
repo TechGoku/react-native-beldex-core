@@ -146,7 +146,7 @@ const sources: string[] = [
   'beldex-core-cpp/src/serial_bridge_utils.cpp',
   'beldex-core-cpp/src/tools__ret_vals.cpp',
   'beldex-client/src/emscr_SendFunds_bridge.cpp',
-  'SendFundsFormSubmissionController.cpp',
+  'beldex-client/src/SendFundsFormSubmissionController.cpp',
   'beldex-wrapper/beldex-methods.cpp'
 ]
 
