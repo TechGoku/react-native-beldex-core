@@ -158,14 +158,11 @@ const sources: string[] = [
 // Phones and simulators we need to support:
 const iosPlatforms: Array<{ sdk: string; arch: string }> = [
   { sdk: 'iphoneos', arch: 'arm64' },
-  { sdk: 'iphoneos', arch: 'armv7' },
-  { sdk: 'iphoneos', arch: 'armv7s' },
   { sdk: 'iphonesimulator', arch: 'arm64' },
-  { sdk: 'iphonesimulator', arch: 'x86_64' }
 ]
 const iosSdkTriples: { [sdk: string]: string } = {
-  iphoneos: '%arch%-apple-ios9.0',
-  iphonesimulator: '%arch%-apple-ios9.0-simulator'
+  iphoneos: '%arch%-apple-ios13.0',
+  iphonesimulator: '%arch%-apple-ios13.0-simulator'
 }
 
 /**
@@ -229,7 +226,7 @@ function inferHeaders(): string[] {
     ...defines.map(name => `-D${name}`),
     ...includePaths.map(path => `-I${join(tmp, path)}`)
   ]
-  const cxxflags = [...cflags, '-std=c++11 -Wno-error=reserved-user-defined-literal']
+  const cxxflags = [...cflags, '-std=c++17 -Wno-error=reserved-user-defined-literal']
 
   const out: { [path: string]: true } = {}
   for (const source of sources) {
@@ -268,12 +265,13 @@ async function generateIosLibrary(): Promise<void> {
   const cflags = [
     ...defines.map(name => `-D${name}`),
     ...includePaths.map(path => `-I${join(tmp, path)}`),
-    '-miphoneos-version-min=9.0',
+    '-miphoneos-version-min=13.0',
     '-O2',
     '-Werror=partial-availability',
+    '-D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION',
     '-Wno-error=reserved-user-defined-literal'
   ]
-  const cxxflags = [...cflags, '-std=c++11 -Wno-error=reserved-user-defined-literal' ]
+  const cxxflags = [...cflags, '-std=c++17 -Wno-error=reserved-user-defined-literal -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0 -DDISABLE_PYTHON=ON' ]
 
   // Generate a library for each platform:
   const libraries: string[] = []
