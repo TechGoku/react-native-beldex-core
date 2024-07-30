@@ -146,7 +146,7 @@ const sources: string[] = [
   'beldex-core-cpp/src/serial_bridge_utils.cpp',
   'beldex-core-cpp/src/tools__ret_vals.cpp',
   'beldex-client/src/emscr_SendFunds_bridge.cpp',
-  'SendFundsFormSubmissionController.cpp',
+  'beldex-client/src/SendFundsFormSubmissionController.cpp',
   'beldex-wrapper/beldex-methods.cpp'
 ]
 
@@ -223,7 +223,7 @@ function inferHeaders(): string[] {
     ...defines.map(name => `-D${name}`),
     ...includePaths.map(path => `-I${join(tmp, path)}`)
   ]
-  const cxxflags = [...cflags, '-std=c++11']
+  const cxxflags = [...cflags, '-std=c++11 -Wreserved-user-defined-literal']
 
   const out: { [path: string]: true } = {}
   for (const source of sources) {
@@ -265,7 +265,7 @@ async function generateIosLibrary(): Promise<void> {
     '-O2',
     '-Werror=partial-availability'
   ]
-  const cxxflags = [...cflags, '-std=c++11']
+  const cxxflags = [...cflags, '-std=c++11 -Wreserved-user-defined-literal']
 
   // Generate a library for each platform:
   const libraries: string[] = []
