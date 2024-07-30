@@ -31,8 +31,8 @@ async function main(): Promise<void> {
 async function downloadSources(): Promise<void> {
   getZip(
     // The Emscripten SDK includes 1.75, but this older version still works:
-    'boost_1_63_0.zip',
-    'https://boostorg.jfrog.io/artifactory/main/release/1.63.0/source/boost_1_63_0.zip'
+    'boost_1_72_0.zip',
+    'https://boostorg.jfrog.io/artifactory/main/release/1.72.0/source/boost_1_72_0.zip'
   )
   getRepo(
     'beldex-core-custom',
@@ -46,7 +46,7 @@ async function downloadSources(): Promise<void> {
     'f35b6cc267891b253770b17e267a83667bcaa1a8'
   )
   getRepo(
-    'beldex-client',
+    'beldex-utils',
     'https://github.com/TechGoku/beldex-client.git',
     'c755d581e86bfd08ea6e10ffc2d731024c94ecb2'
   )
@@ -70,7 +70,7 @@ const defines: string[] = [
 
 // Compiler options derived loosely from beldex-core-cpp/CMakeLists.txt:
 const includePaths: string[] = [
-  'boost_1_63_0/',
+  'boost_1_72_0/',
   'beldex-core-custom/',
   'beldex-core-custom/contrib/libsodium/include/',
   'beldex-core-custom/contrib/libsodium/include/sodium/',
@@ -78,17 +78,18 @@ const includePaths: string[] = [
   'beldex-core-custom/cryptonote_basic/',
   'beldex-core-custom/cryptonote_core/',
   'beldex-core-custom/epee/include/',
+  'beldex-core-custom/external/',
+  'beldex-core-custom/external/loki-mq/',
   'beldex-core-custom/mnemonics/',
   'beldex-core-custom/vtlogger/',
   'beldex-core-custom/wallet/',
-  'beldex-core-custom/external/loki-mq',
   'beldex-core-cpp/src/'
 ]
 
 // Source list derived loosely from beldex-core-cpp/CMakeLists.txt:
 const sources: string[] = [
-  'boost_1_63_0/libs/thread/src/pthread/once.cpp',
-  'boost_1_63_0/libs/thread/src/pthread/thread.cpp',
+  'boost_1_72_0/libs/thread/src/pthread/once.cpp',
+  'boost_1_72_0/libs/thread/src/pthread/thread.cpp',
   'beldex-core-custom/common/aligned.c',
   'beldex-core-custom/common/base58.cpp',
   'beldex-core-custom/common/threadpool.cpp',
@@ -108,6 +109,8 @@ const sources: string[] = [
   'beldex-core-custom/crypto/hash-extra-jh.c',
   'beldex-core-custom/crypto/hash-extra-skein.c',
   'beldex-core-custom/crypto/hash.c',
+  'beldex-core-custom/crypto/cn_heavy_hash_hard_arm.cpp',
+  'beldex-core-custom/crypto/cn_heavy_hash_hard_intel.cpp',
   'beldex-core-custom/crypto/jh.c',
   'beldex-core-custom/crypto/keccak.c',
   'beldex-core-custom/crypto/oaes_lib.c',
@@ -116,6 +119,7 @@ const sources: string[] = [
   'beldex-core-custom/crypto/slow-hash-dummied.cpp',
   'beldex-core-custom/crypto/tree-hash.c',
   'beldex-core-custom/cryptonote_basic/account.cpp',
+  'beldex-core-custom/cryptonote_basic/cryptonote_basic.cpp',
   'beldex-core-custom/cryptonote_basic/cryptonote_basic_impl.cpp',
   'beldex-core-custom/cryptonote_basic/cryptonote_format_utils.cpp',
   'beldex-core-custom/cryptonote_core/cryptonote_tx_utils.cpp',
@@ -125,6 +129,7 @@ const sources: string[] = [
   'beldex-core-custom/epee/src/memwipe.c',
   'beldex-core-custom/epee/src/mlocker.cpp',
   'beldex-core-custom/epee/src/string_tools.cpp',
+  'beldex-core-custom/epee/src/portable_storage.cpp',
   'beldex-core-custom/epee/src/wipeable_string.cpp',
   'beldex-core-custom/mnemonics/electrum-words.cpp',
   'beldex-core-custom/ringct/bulletproofs.cc',
@@ -145,8 +150,8 @@ const sources: string[] = [
   'beldex-core-cpp/src/serial_bridge_index.cpp',
   'beldex-core-cpp/src/serial_bridge_utils.cpp',
   'beldex-core-cpp/src/tools__ret_vals.cpp',
-  'beldex-client/src/emscr_SendFunds_bridge.cpp',
-  'beldex-client/src/SendFundsFormSubmissionController.cpp',
+  'beldex-utils/src/emscr_SendFunds_bridge.cpp',
+  'beldex-utils/src/SendFundsFormSubmissionController.cpp',
   'beldex-wrapper/beldex-methods.cpp'
 ]
 
@@ -168,28 +173,29 @@ const iosSdkTriples: { [sdk: string]: string } = {
  */
 async function generateAndroidBuild() {
   // Clean existing stuff:
+  console.log('Generating Android....................');
   const src = 'android/src/main/cpp/'
-  await disklet.delete(src + 'boost_1_63_0')
+  await disklet.delete(src + 'boost_1_72_0')
   await disklet.delete(src + 'beldex-core-custom')
   await disklet.delete(src + 'beldex-core-cpp')
-  await disklet.delete(src + 'beldex-client')
+  await disklet.delete(src + 'beldex-utils')
   await disklet.delete(src + 'beldex-wrapper')
 
   // Figure out which files we need:
   const headers = inferHeaders()
   const extraFiles: string[] = [
     // Preserve licenses:
-    'boost_1_63_0/LICENSE_1_0.txt',
+    'boost_1_72_0/LICENSE_1_0.txt',
     'beldex-core-cpp/LICENSE.txt',
 
     // Platform-specific files our header inference might not catch:
-    'boost_1_63_0/boost/atomic/detail/ops_cas_based.hpp',
-    'boost_1_63_0/boost/atomic/detail/ops_extending_cas_based.hpp',
-    'boost_1_63_0/boost/atomic/detail/ops_gcc_x86_dcas.hpp',
-    'boost_1_63_0/boost/config/platform/linux.hpp',
-    'boost_1_63_0/boost/detail/fenv.hpp',
-    'boost_1_63_0/boost/uuid/detail/uuid_generic.hpp',
-    'boost_1_63_0/boost/uuid/detail/uuid_x86.hpp'
+    'boost_1_72_0/boost/atomic/detail/ops_cas_based.hpp',
+    'boost_1_72_0/boost/atomic/detail/ops_extending_cas_based.hpp',
+    'boost_1_72_0/boost/atomic/detail/ops_gcc_x86_dcas.hpp',
+    'boost_1_72_0/boost/config/platform/linux.hpp',
+    'boost_1_72_0/boost/detail/fenv.hpp',
+    'boost_1_72_0/boost/uuid/detail/uuid_generic.ipp',
+    'boost_1_72_0/boost/uuid/detail/uuid_x86.ipp'
   ]
   for (const extra of extraFiles) {
     if (headers.indexOf(extra) >= 0) {
@@ -223,7 +229,7 @@ function inferHeaders(): string[] {
     ...defines.map(name => `-D${name}`),
     ...includePaths.map(path => `-I${join(tmp, path)}`)
   ]
-  const cxxflags = [...cflags, '-std=c++11 -Wreserved-user-defined-literal']
+  const cxxflags = [...cflags, '-std=c++11 -Wno-error=reserved-user-defined-literal']
 
   const out: { [path: string]: true } = {}
   for (const source of sources) {
@@ -258,14 +264,16 @@ function inferHeaders(): string[] {
  * Compiles the sources into an iOS static library.
  */
 async function generateIosLibrary(): Promise<void> {
+  console.log('Generating iOS library.......................');
   const cflags = [
     ...defines.map(name => `-D${name}`),
     ...includePaths.map(path => `-I${join(tmp, path)}`),
     '-miphoneos-version-min=9.0',
     '-O2',
-    '-Werror=partial-availability'
+    '-Werror=partial-availability',
+    '-Wno-error=reserved-user-defined-literal'
   ]
-  const cxxflags = [...cflags, '-std=c++11 -Wreserved-user-defined-literal']
+  const cxxflags = [...cflags, '-std=c++11 -Wno-error=reserved-user-defined-literal' ]
 
   // Generate a library for each platform:
   const libraries: string[] = []
