@@ -223,7 +223,7 @@ function inferHeaders(): string[] {
     ...defines.map(name => `-D${name}`),
     ...includePaths.map(path => `-I${join(tmp, path)}`)
   ]
-  const cxxflags = [...cflags, '-std=c++11']
+  const cxxflags = [...cflags, '-std=c++11 -Wreserved-user-defined-literal']
 
   const out: { [path: string]: true } = {}
   for (const source of sources) {
@@ -265,7 +265,7 @@ async function generateIosLibrary(): Promise<void> {
     '-O2',
     '-Werror=partial-availability'
   ]
-  const cxxflags = [...cflags, '-std=c++11']
+  const cxxflags = [...cflags, '-std=c++11 -Wreserved-user-defined-literal']
 
   // Generate a library for each platform:
   const libraries: string[] = []
