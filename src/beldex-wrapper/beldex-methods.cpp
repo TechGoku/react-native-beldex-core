@@ -19,7 +19,7 @@ std::string decodeAddress(const std::vector<const std::string> &args) {
 }
 
 std::string estimateTxFee(const std::vector<const std::string> &args) {
-  return serial_bridge::estimated_tx_network_fee(args[0], args[1], args[2]);
+  return serial_bridge::estimated_tx_network_fee(args[0], args[1], args[2], args[2]);
 }
 
 std::string generateKeyImage(const std::vector<const std::string> &args) {
