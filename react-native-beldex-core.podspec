@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
   s.requires_arc = true
   s.source = {
-    :git => "https://github.com/TechGoku/react-native-beldex-core.git",
+    :git => "https://github.com/Beldex-Coin/react-native-beldex-core.git",
     :tag => "v#{s.version}"
   }
   s.source_files =

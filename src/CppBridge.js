@@ -251,7 +251,7 @@ class CppBridge {
   }
 
   /**
-   * Decodes address to provide spend and view keys.monero
+   * Decodes address to provide spend and view keys.beldex
       throw Error(ret.err_msg)
     }
 

@@ -1,8 +1,8 @@
 # react-native-beldex-core
 
-This library packages Monero C++ crypto methods for use on React Native.
+This library packages Beldex C++ crypto methods for use on React Native.
 
-It has a single default export that mostly matches the `WABridge` interface found in [@mymonero/mymonero-monero-client](https://github.com/mymonero/mymonero-utils/tree/master/packages/mymonero-monero-client). The big difference is that react-native-mymonero-core only has async methods, whereas many of the upstream `WABridge` methods are synchronous.
+It has a single default export that mostly matches the `WABridge` interface found in [@bdxi/beldex-client](https://github.com/Beldex-Coin/react-native-beldex-core.git). The big difference is that react-native-beldex-core only has async methods, whereas many of the upstream `WABridge` methods are synchronous.
 
 ## Usage
 
@@ -45,7 +45,7 @@ The available methods are:
 - newIntegratedAddress
 - seedAndKeysFromMnemonic
 
-See the documentation at [@bdxi/beldex-client](https://github.com/mymonero/mymonero-utils/tree/master/packages/mymonero-monero-client) for more information.
+See the documentation at [@bdxi/beldex-client](https://github.com/Beldex-Coin/beldex-utils/tree/master/packages/beldex-client) for more information.
 
 ## Developing
 
@@ -65,4 +65,4 @@ This script does the following tasks:
 - Compile an iOS universal static library and put it into an XCFramework.
 - Generate Flow types from the TypeScript definitions.
 
-The `update-sources` script is also the place to make edits when upgrading any of the third-party dependencies. The react-native-mymonero-core repo doesn't include these third-party C++ sources, since they are enormous.
+The `update-sources` script is also the place to make edits when upgrading any of the third-party dependencies. The react-native-beldex-core repo doesn't include these third-party C++ sources, since they are enormous.
