@@ -8,8 +8,8 @@ RCT_EXPORT_MODULE();
 + (BOOL)requiresMainQueueSetup { return NO; }
 
 RCT_REMAP_METHOD(
-  callBeldex,
-  callBeldexMethod:(NSString *)method
+  callMyBeldex,
+  callMyBeldexMethod:(NSString *)method
   arguments:(NSArray *)arguments
   resolver:(RCTPromiseResolveBlock)resolve
   rejecter:(RCTPromiseRejectBlock)reject
