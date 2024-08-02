@@ -47,8 +47,8 @@ async function downloadSources(): Promise<void> {
   )
   getRepo(
     'beldex-utils',
-    'https://github.com/TechGoku/beldex-client.git',
-    'c755d581e86bfd08ea6e10ffc2d731024c94ecb2'
+    'https://github.com/Beldex-Coin/beldex-utils.git',
+    '64bc76a6583020f5ccec6f2dc75554e829bd0f06'
   )
   await disklet.setText(
     // Upstream beldex-utils wrongly includes this file, so make a dummy:

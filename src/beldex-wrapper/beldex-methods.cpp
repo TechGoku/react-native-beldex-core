@@ -1,6 +1,6 @@
 #include "beldex-methods.hpp"
 #include "../beldex-core-cpp/src/serial_bridge_index.hpp"
-#include "../beldex-utils/src/emscr_SendFunds_bridge.hpp"
+#include "../beldex-utils/packages/beldex-client/src/emscr_SendFunds_bridge.hpp"
 
 std::string addressAndKeysFromSeed(const std::vector<const std::string> &args) {
   return serial_bridge::address_and_keys_from_seed(args[0], args[1]);
@@ -19,7 +19,7 @@ std::string decodeAddress(const std::vector<const std::string> &args) {
 }
 
 std::string estimateTxFee(const std::vector<const std::string> &args) {
-  return serial_bridge::estimated_tx_network_fee(args[0], args[1], args[2], args[2]);
+  return serial_bridge::estimated_tx_network_fee(args[0], args[1], args[2], args[3]);
 }
 
 std::string generateKeyImage(const std::vector<const std::string> &args) {

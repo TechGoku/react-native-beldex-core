@@ -17,7 +17,7 @@ class CppBridge {
     this.Module = {}
     for (const name of BeldexCore.methodNames) {
       this.Module[name] = function (...args) {
-        return BeldexCore.callBeldex(name, args).then(out => {
+        return BeldexCore.callMyBeldex(name, args).then(out => {
           // We have to cast some return values:
           return name === 'compareMnemonics' ||
             name === 'isIntegratedAddress' ||
@@ -251,7 +251,7 @@ class CppBridge {
   }
 
   /**
-   * Decodes address to provide spend and view keys.monero
+   * Decodes address to provide spend and view keys.beldex
       throw Error(ret.err_msg)
     }
 

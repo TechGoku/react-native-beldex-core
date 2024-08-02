@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BeldexModule extends ReactContextBaseJavaModule {
-  private native String callBeldexJNI(String method, String[] arguments);
+  private native String callMyBeldexJNI(String method, String[] arguments);
 
   private native String[] getMethodNames();
 
   static {
-    System.loadLibrary("beldex-jni");
+    System.loadLibrary("mybeldex-jni");
   }
 
   public BeldexModule(ReactApplicationContext reactContext) {
@@ -34,7 +34,7 @@ public class BeldexModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void callBeldex(String method, ReadableArray arguments, Promise promise) {
+  public void callMyBeldex(String method, ReadableArray arguments, Promise promise) {
     // Re-package the arguments:
     String[] strings = new String[arguments.size()];
     for (int i = 0; i < arguments.size(); ++i) {
@@ -42,7 +42,7 @@ public class BeldexModule extends ReactContextBaseJavaModule {
     }
 
     try {
-      promise.resolve(callBeldexJNI(method, strings));
+      promise.resolve(callMyBeldexJNI(method, strings));
     } catch (Exception e) {
       promise.reject("BeldexError", e);
     }
