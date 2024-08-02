@@ -100,7 +100,7 @@ export type CreatedTransaction = {
   used_fee: string;
 
   // Other stuff:
-  isXMRAddressIntegrated: string; // '0' or '1'
+  isBDXAddressIntegrated: string; // '0' or '1'
   mixin: string; // integer string
   target_address: string; // Broken
 };

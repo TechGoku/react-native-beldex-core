@@ -130,7 +130,7 @@ class CppBridge {
       }
       // parse variables ruturned as strings
       rawTx.mixin = parseInt(rawTx.mixin)
-      rawTx.isXMRAddressIntegrated = rawTx.isXMRAddressIntegrated === 'true'
+      rawTx.isBDXAddressIntegrated = rawTx.isBDXAddressIntegrated === 'true'
 
       return rawTx
   }
