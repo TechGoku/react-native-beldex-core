@@ -1,5 +1,5 @@
 #include "beldex-methods.hpp"
-#include "../beldex-utils/packages/beldex-client/src/serial_bridge_index.hpp"
+#include "../beldex-core-cpp/src/serial_bridge_index.hpp"
 #include "../beldex-utils/packages/beldex-client/src/emscr_SendFunds_bridge.hpp"
 
 std::string addressAndKeysFromSeed(const std::vector<const std::string> &args) {
